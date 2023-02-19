@@ -38,14 +38,21 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
-                .authorizeRequests()                    //each request must be authorized
+                .authorizeRequests()   //each request must be authorized
+                //defining access to pages by Roles
+                .antMatchers("/users/**").hasRole("ADMIN")
+                .antMatchers("/project/**").hasRole("MANAGER")
+                .antMatchers("/task/employee/**").hasRole("EMPLOYEE")
+                .antMatchers("/task/**").hasRole("MANAGER")
+                //.antMatchers("/task/**").hasAnyRole("EMPLOYEE", "ADMIN")
+                //.antMatchers("/task/**").hasAuthority("ROLE_EMPLOYEE")
                 .antMatchers(
                         "/",
                         "/login",
                         "/fragments/**",
                         "/assets/**",
                         "/images/**"
-                ).permitAll()                           //the above ones - permit without authentication
+                ).permitAll()                   //the above ones - permit without authentication
                 .anyRequest().authenticated()   //any other requests must be authenticated
                 .and()
                 .httpBasic()                    //temporary custom authentication form
