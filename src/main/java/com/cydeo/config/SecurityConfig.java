@@ -16,6 +16,9 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
+    // manual (hard-coded) way of overriding Spring-security User
+    // when performing the first time sign-in
+    // without connecting to DB, but just saving in the memory of an app
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder encoder){
         List<UserDetails> userList = new ArrayList<>();
