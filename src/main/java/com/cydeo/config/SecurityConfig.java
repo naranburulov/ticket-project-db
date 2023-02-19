@@ -32,17 +32,17 @@ public class SecurityConfig {
 //        return new InMemoryUserDetailsManager(userList);
 //    }
 
-    //everyone should be able to reach certain pages; without authentication - .antMatchers()
+    //filtering restrictions for pages
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
                 .authorizeRequests()   //each request must be authorized
                 //defining access to pages by Roles
-                .antMatchers("/users/**").hasRole("ADMIN")
-                .antMatchers("/project/**").hasRole("MANAGER")
-                .antMatchers("/task/employee/**").hasRole("EMPLOYEE")
-                .antMatchers("/task/**").hasRole("MANAGER")
+                .antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+//                .antMatchers("/project/**").hasRole("MANAGER")
+//                .antMatchers("/task/employee/**").hasRole("EMPLOYEE")
+//                .antMatchers("/task/**").hasRole("MANAGER")
                 //.antMatchers("/task/**").hasAnyRole("EMPLOYEE", "ADMIN")
                 //.antMatchers("/task/**").hasAuthority("ROLE_EMPLOYEE")
                 .antMatchers(
