@@ -55,7 +55,11 @@ public class SecurityConfig {
                 ).permitAll()                   //the above ones - permit without authentication
                 .anyRequest().authenticated()   //any other requests must be authenticated
                 .and()
-                .httpBasic()                    //temporary custom authentication form
+//                .httpBasic()                    //temporary custom authentication form
+                .formLogin()                      //below directions - for my login form
+                .loginPage("/login")
+                .defaultSuccessUrl("/welcome")
+                .failureUrl("/login?error=true")
                 .and().build();
     }
 
