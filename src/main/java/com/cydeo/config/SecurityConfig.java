@@ -19,19 +19,18 @@ import java.util.List;
 public class SecurityConfig {
 
     // manual (hard-coded) way of overriding Spring-security User
-    // when performing the first time sign-in
-    // without connecting to DB, but just saving in the memory of an app
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder){
-        List<UserDetails> userList = new ArrayList<>();
-
-        userList.add(new User("mike", encoder.encode("Abc1"),
-                        Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"))));
-        userList.add(new User("naran", encoder.encode("Abc1"),
-                        Arrays.asList(new SimpleGrantedAuthority("ROLE_MANAGER"))));
-
-        return new InMemoryUserDetailsManager(userList);
-    }
+    //        commented out.    instead see: entity/common/UserPrincipal and service/SecurityService
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder encoder){
+//        List<UserDetails> userList = new ArrayList<>();
+//
+//        userList.add(new User("mike", encoder.encode("Abc1"),
+//                        Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"))));
+//        userList.add(new User("naran", encoder.encode("Abc1"),
+//                        Arrays.asList(new SimpleGrantedAuthority("ROLE_MANAGER"))));
+//
+//        return new InMemoryUserDetailsManager(userList);
+//    }
 
     //everyone should be able to reach certain pages; without authentication - .antMatchers()
     @Bean
