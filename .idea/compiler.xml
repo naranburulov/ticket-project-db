@@ -9,12 +9,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ticket-project-db" />
         <module name="ticketing-project-mvc" />
+        <module name="ticket-project-sec" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ticket-project-db" options="-parameters" />
+      <module name="ticket-project-sec" options="-parameters" />
       <module name="ticketing-project-mvc" options="-parameters" />
     </option>
   </component>
