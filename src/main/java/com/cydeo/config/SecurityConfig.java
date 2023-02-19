@@ -39,7 +39,7 @@ public class SecurityConfig {
         return http
                 .authorizeRequests()   //each request must be authorized
                 //defining access to pages by Roles
-                .antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/users/**").hasAuthority("Admin")
 //                .antMatchers("/project/**").hasRole("MANAGER")
 //                .antMatchers("/task/employee/**").hasRole("EMPLOYEE")
 //                .antMatchers("/task/**").hasRole("MANAGER")
