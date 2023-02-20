@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
     public void save(UserDTO userDTO) {
         User user = mapperUtil.convert(userDTO, new User());
         user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+        user.setEnabled(true);
         userRepository.save(user);
     }
 
