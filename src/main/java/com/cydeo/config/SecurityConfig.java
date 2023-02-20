@@ -18,20 +18,6 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-    // manual (hard-coded) way of overriding Spring-security User
-    //        commented out.    instead see: entity/common/UserPrincipal and service/SecurityService
-//    @Bean
-//    public UserDetailsService userDetailsService(PasswordEncoder encoder){
-//        List<UserDetails> userList = new ArrayList<>();
-//
-//        userList.add(new User("mike", encoder.encode("Abc1"),
-//                        Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"))));
-//        userList.add(new User("naran", encoder.encode("Abc1"),
-//                        Arrays.asList(new SimpleGrantedAuthority("ROLE_MANAGER"))));
-//
-//        return new InMemoryUserDetailsManager(userList);
-//    }
-
     //filtering restrictions for pages
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,11 +26,9 @@ public class SecurityConfig {
                 .authorizeRequests()   //each request must be authorized
                 //defining access to pages by Roles
                 .antMatchers("/users/**").hasAuthority("Admin") //"Admin" spelling has to match with the data.sql
-//                .antMatchers("/project/**").hasRole("MANAGER")
-//                .antMatchers("/task/employee/**").hasRole("EMPLOYEE")
-//                .antMatchers("/task/**").hasRole("MANAGER")
-                //.antMatchers("/task/**").hasAnyRole("EMPLOYEE", "ADMIN")
-                //.antMatchers("/task/**").hasAuthority("ROLE_EMPLOYEE")
+                .antMatchers("/project/**").hasAuthority("Manager")
+                .antMatchers("/task/employee/**").hasAuthority("Employee")
+                .antMatchers("/task/**").hasAuthority("Manager")
                 .antMatchers(
                         "/",
                         "/login",
@@ -54,7 +38,7 @@ public class SecurityConfig {
                 ).permitAll()                   //the above ones - permit without authentication
                 .anyRequest().authenticated()   //any other requests must be authenticated
                 .and()
-//                .httpBasic()                    //temporary custom authentication form
+//                .httpBasic()                    //form provided by Spring Security
                 .formLogin()                      //below directions - for my login form
                 .loginPage("/login")
                 .defaultSuccessUrl("/welcome")
