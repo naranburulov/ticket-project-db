@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,11 +39,16 @@ public class SecurityConfig {
                 ).permitAll()                   //the above ones - permit without authentication
                 .anyRequest().authenticated()   //any other requests must be authenticated
                 .and()
-//                .httpBasic()                    //form provided by Spring Security
-                .formLogin()                      //below directions - for my login form
-                .loginPage("/login")
-                .defaultSuccessUrl("/welcome")
-                .failureUrl("/login?error=true")
+//                  .httpBasic()                      //form provided by Spring Security
+                    .formLogin()                      //filtering for my login form
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/welcome")
+                    .failureUrl("/login?error=true")
+                    .permitAll()
+                .and()
+                .logout()                           //filtering for logout
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login")
                 .and().build();
     }
 
