@@ -11,9 +11,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     private final SecurityService securityService;
+    private final AuthSuccessHandler authSuccessHandler;
 
-    public SecurityConfig(SecurityService securityService) {
+    public SecurityConfig(SecurityService securityService, AuthSuccessHandler authSuccessHandler) {
         this.securityService = securityService;
+        this.authSuccessHandler = authSuccessHandler;
     }
 
     //filtering restrictions for pages
@@ -39,7 +41,8 @@ public class SecurityConfig {
 //                  .httpBasic()                      //form provided by Spring Security
                     .formLogin()                      //filtering for my login form
                     .loginPage("/login")
-                    .defaultSuccessUrl("/welcome")
+                    //.defaultSuccessUrl("/welcome")
+                    .successHandler(authSuccessHandler)     //each role will land on appropriate page, see at config
                     .failureUrl("/login?error=true")
                     .permitAll()
                 .and()
