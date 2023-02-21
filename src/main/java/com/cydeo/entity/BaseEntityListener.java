@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 
 @Component
 public class BaseEntityListener extends AuditingEntityListener {
-
+    //getId through UserPrincipal (user from Spring Security)
+    //had to create BaseEntityListener because I could not extend AuditingEntityListener from the BaseEntity class
 
     @PrePersist
     private void onPrePersist(BaseEntity baseEntity){
